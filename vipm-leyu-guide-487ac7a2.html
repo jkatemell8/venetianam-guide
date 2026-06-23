@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+  <title>索引 · 乐鱼</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      background: #f0f5f5;
+      color: #1f2b2b;
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.6;
+      padding: 0 1.25rem 2.5rem;
+      min-height: 100vh;
+    }
+    .page {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    /* 导航 — 轻量，蓝绿色点缀 */
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.2rem 0 0.6rem;
+      border-bottom: 1px solid #d6e3e3;
+      margin-bottom: 3rem;
+    }
+    .nav-brand {
+      font-weight: 500;
+      font-size: 1.1rem;
+      letter-spacing: 0.02em;
+      color: #236b6b;
+    }
+    .nav-brand small {
+      font-weight: 300;
+      color: #5b7a7a;
+      margin-left: 0.3rem;
+    }
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+      font-size: 0.9rem;
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: #2d4f4f;
+      padding-bottom: 0.2rem;
+      border-bottom: 2px solid transparent;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .nav-links a:hover {
+      border-bottom-color: #2e8b8b;
+      color: #1a4d4d;
+    }
+    .nav-links a:focus-visible {
+      outline: 2px solid #2e8b8b;
+      outline-offset: 2px;
+      border-radius: 2px;
+    }
+
+    /* 英雄区 / 介绍 */
+    .hero {
+      margin-bottom: 3.2rem;
+    }
+    .hero h1 {
+      font-size: 2.2rem;
+      font-weight: 450;
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+      margin-bottom: 0.75rem;
+      color: #144242;
+    }
+    .hero h1 span {
+      background: linear-gradient(120deg, #1f7a7a 0%, #389e9e 80%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero p {
+      max-width: 640px;
+      font-size: 1.05rem;
+      color: #2b4444;
+      margin-bottom: 1rem;
+    }
+    .hero .tagline {
+      display: inline-block;
+      background: #e1efef;
+      padding: 0.3rem 0.9rem;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      color: #1b5a5a;
+      margin-top: 0.3rem;
+    }
+
+    /* 三个场景模块 — 网格卡片 */
+    .scenes-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+    .scene-card {
+      background: #ffffff;
+      border-radius: 18px;
+      padding: 1.8rem 1.2rem 1.5rem;
+      box-shadow: 0 4px 12px rgba(30, 70, 70, 0.05);
+      transition: box-shadow 0.25s, transform 0.15s;
+      border: 1px solid rgba(180, 210, 210, 0.3);
+    }
+    .scene-card:hover {
+      box-shadow: 0 8px 24px rgba(30, 80, 80, 0.08);
+      transform: translateY(-3px);
+    }
+    .scene-card h3 {
+      font-size: 1.1rem;
+      font-weight: 500;
+      margin-bottom: 0.6rem;
+      color: #1d5656;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .scene-card h3::before {
+      content: "·";
+      display: inline-block;
+      font-size: 1.6rem;
+      line-height: 1;
+      color: #319494;
+      margin-right: 0.2rem;
+    }
+    .scene-card p {
+      font-size: 0.92rem;
+      color: #365050;
+      margin-bottom: 0.7rem;
+    }
+    .scene-card .meta {
+      font-size: 0.78rem;
+      color: #5e7a7a;
+      border-top: 1px dashed #d0e0e0;
+      padding-top: 0.7rem;
+      margin-top: 0.3rem;
+    }
+
+    /* 常见说明 (FAQ 摘要) */
+    .faq-summary {
+      margin-bottom: 3rem;
+    }
+    .faq-summary h2 {
+      font-weight: 450;
+      font-size: 1.4rem;
+      color: #144242;
+      margin-bottom: 1.2rem;
+      letter-spacing: -0.01em;
+    }
+    .faq-item {
+      background: #ffffffd9;
+      backdrop-filter: blur(2px);
+      border-radius: 14px;
+      padding: 0.9rem 1.3rem;
+      margin-bottom: 0.7rem;
+      border-left: 4px solid #6fafaf;
+      box-shadow: 0 2px 6px rgba(30, 70, 70, 0.03);
+    }
+    .faq-item strong {
+      color: #1a5454;
+      font-weight: 500;
+      display: block;
+      margin-bottom: 0.3rem;
+    }
+    .faq-item p {
+      color: #2f4848;
+      font-size: 0.92rem;
+    }
+
+    /* 链接自然嵌入段落 */
+    .link-sentence {
+      background: #e7f2f2;
+      padding: 1rem 1.4rem;
+      border-radius: 20px;
+      margin-bottom: 2rem;
+      font-size: 0.98rem;
+      color: #1b4141;
+      border: 1px solid #cde0e0;
+    }
+    .link-sentence a {
+      color: #1b6d6d;
+      font-weight: 450;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      text-decoration-thickness: 1px;
+      text-decoration-color: #6fafaf;
+    }
+    .link-sentence a:hover {
+      color: #0e4f4f;
+      text-decoration-color: #319494;
+    }
+    .link-sentence a:focus-visible {
+      outline: 2px solid #1b7a7a;
+      outline-offset: 2px;
+      border-radius: 2px;
+    }
+
+    .footnote {
+      text-align: center;
+      color: #5c7575;
+      font-size: 0.8rem;
+      padding-top: 2rem;
+      border-top: 1px solid #d6e6e6;
+      margin-top: 1.2rem;
+    }
+
+    /* 响应式 */
+    @media (max-width: 720px) {
+      .hero h1 { font-size: 1.7rem; }
+      .scenes-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+      .nav {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+      .nav-links {
+        gap: 1rem;
+        font-size: 0.85rem;
+        flex-wrap: wrap;
+      }
+      body { padding-left: 1rem; padding-right: 1rem; }
+    }
+    @media (max-width: 480px) {
+      .hero h1 { font-size: 1.5rem; }
+      .faq-item { padding: 0.7rem 1rem; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- 顶部导航（轻量） -->
+  <nav class="nav">
+    <div class="nav-brand">索引<span class="nav-brand small">· 素材手册</span></div>
+    <ul class="nav-links">
+      <li><a href="#scenes">场景</a></li>
+      <li><a href="#faq">说明</a></li>
+      <li><a href="#">归档</a></li>
+    </ul>
+  </nav>
+
+  <!-- 核心介绍 + 英雄区 -->
+  <section class="hero">
+    <h1>关于资料整理与<span>乐鱼</span>信息索引</h1>
+    <p>这份页面更接近一份轻量的笔记——把分散在文档、片段和链接中的内容，按照场景和常见疑问重新梳理。没有多余的修辞，只保留可回溯的线索。</p>
+    <span class="tagline">收集 · 归类 · 标注来源</span>
+  </section>
+
+  <!-- 三个场景模块 (网格卡片) -->
+  <section id="scenes" class="scenes-grid">
+    <div class="scene-card">
+      <h3>场景一 · 日常查阅</h3>
+      <p>从零散记录中提取关键条目，整理成可快速浏览的列表。适合在需要回顾资料细节时直接调用。</p>
+      <div class="meta">标记：结构化摘要 · 版本 2025</div>
+    </div>
+    <div class="scene-card">
+      <h3>场景二 · 对照梳理</h3>
+      <p>将不同来源的描述并列展示，便于比对差异和补充遗漏。常用于核对功能表述或更新日志。</p>
+      <div class="meta">标注：交叉引用 · 差异高亮</div>
+    </div>
+    <div class="scene-card">
+      <h3>场景三 · 索引归档</h3>
+      <p>把碎片化的页面标题、短说明和链接整理成统一格式的索引卡，方便后期检索或嵌入笔记系统。</p>
+      <div class="meta">格式：卡片摘要 · 外部链接</div>
+    </div>
+  </section>
+
+  <!-- 常见说明 (FAQ 摘要) -->
+  <section id="faq" class="faq-summary">
+    <h2>常见说明 · 摘要</h2>
+    <div class="faq-item">
+      <strong>这些资料的来源是什么？</strong>
+      <p>主要来自公开的产品介绍、帮助文档以及社区讨论中较有代表性的归纳帖。每一条都经过二次校对，但建议结合原始页面判断。</p>
+    </div>
+    <div class="faq-item">
+      <strong>为什么以“场景”而非“功能”分类？</strong>
+      <p>按使用场景归类更容易与日常需求对应，减少在功能列表里逐条查找的时间。三个场景基本覆盖了大部分查阅类型。</p>
+    </div>
+    <div class="faq-item">
+      <strong>页面会不会频繁更新？</strong>
+      <p>索引内容会按季度审阅，剔除过时或重复的条目，补充新出现的可靠资料。小调整不定期进行。</p>
+    </div>
+  </section>
+
+  <!-- 链接自然嵌入一个句子，且可见文本严格等于“乐鱼” -->
+  <div class="link-sentence">
+    如果你在查找某个功能或说明时觉得信息零散，不妨试试从 <a href="https://vipm-leyu.com">乐鱼</a> 的基础索引开始，那里保留了比较干净的条目结构和原始链接记录。
+  </div>
+
+  <div class="footnote">
+    整理记录 · 仅供个人参考 · 最后更新 2025
+  </div>
+</div>
+</body>
+</html>
