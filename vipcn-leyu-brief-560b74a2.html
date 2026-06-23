@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5">
+  <title>乐鱼 · 知识型查询对照站</title>
+  <style>
+    /* 全局重置 & 调色板 */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background: #f4f9fc;
+      color: #1a2c34;
+      line-height: 1.6;
+      padding: 1.2rem;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    /* 网格背景装饰 —— 卡片式网格肌理 */
+    .page-wrapper {
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+      flex: 1;
+      background-image:
+        linear-gradient(rgba(0, 140, 140, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 140, 140, 0.04) 1px, transparent 1px);
+      background-size: 48px 48px;
+      background-position: -1px -1px;
+      border-radius: 32px;
+      padding: 1rem;
+    }
+
+    /* 主视觉 hero —— 蓝绿色调，信息卡片感 */
+    .hero {
+      background: linear-gradient(145deg, #d7f0ee 0%, #bbdfda 100%);
+      border-radius: 28px;
+      padding: 2.2rem 1.8rem;
+      margin-bottom: 2.4rem;
+      box-shadow: 0 12px 28px -8px rgba(0, 80, 80, 0.12);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+    }
+    .hero-text {
+      flex: 2 1 260px;
+    }
+    .hero-text h1 {
+      font-size: 2.2rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: #0a4745;
+      line-height: 1.2;
+      margin-bottom: 0.6rem;
+    }
+    .hero-text .subhead {
+      font-size: 1.1rem;
+      color: #1e5e5b;
+      max-width: 540px;
+      margin-bottom: 0.8rem;
+    }
+    .hero-tag {
+      display: inline-block;
+      background: #ffffffcc;
+      backdrop-filter: blur(4px);
+      padding: 0.35rem 1rem;
+      border-radius: 60px;
+      font-size: 0.8rem;
+      color: #0d5f5a;
+      font-weight: 500;
+      border: 1px solid #b1d5cf;
+    }
+    .hero-visual {
+      flex: 1 1 150px;
+      display: flex;
+      justify-content: flex-end;
+    }
+    .visual-card {
+      background: #f6fffe;
+      width: 140px;
+      height: 130px;
+      border-radius: 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 18px rgba(0, 90, 80, 0.08);
+      border: 1px solid #b9dbd4;
+    }
+    .visual-card span {
+      font-size: 2.6rem;
+      line-height: 1;
+      margin-bottom: 0.2rem;
+    }
+    .visual-card p {
+      font-size: 0.75rem;
+      color: #1d6f68;
+      background: #c7e6df;
+      padding: 0.1rem 0.9rem;
+      border-radius: 30px;
+    }
+
+    /* 网格卡片体系 —— 用途卡片、人群卡片 */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.4rem;
+      margin: 2rem 0 1.6rem;
+    }
+    .card {
+      background: #ffffff;
+      border-radius: 24px;
+      padding: 1.5rem 1.2rem;
+      box-shadow: 0 6px 16px rgba(0, 70, 70, 0.04);
+      border: 1px solid #d2e7e2;
+      transition: 0.2s ease;
+      display: flex;
+      flex-direction: column;
+    }
+    .card:hover {
+      transform: translateY(-3px);
+      border-color: #9dcbc2;
+      box-shadow: 0 14px 24px -6px rgba(0, 120, 100, 0.08);
+    }
+    .card-icon {
+      font-size: 1.9rem;
+      margin-bottom: 0.3rem;
+    }
+    .card h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #07544f;
+      margin: 0.3rem 0 0.5rem;
+    }
+    .card p {
+      font-size: 0.92rem;
+      color: #2b4b4a;
+      flex: 1;
+    }
+    .card .meta-tag {
+      margin-top: 0.8rem;
+      font-size: 0.7rem;
+      color: #46837b;
+      border-top: 1px dashed #bee0d8;
+      padding-top: 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    /* 适合人群专用卡 —— 复用 .card 但增加标记 */
+    .audience-card {
+      border-left: 4px solid #319990;
+    }
+
+    /* 段落承接 · 自然链接区域 */
+    .context-block {
+      background: #edf7f5;
+      border-radius: 28px;
+      padding: 1.6rem 1.8rem;
+      margin: 2.2rem 0 1.2rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.8rem;
+      align-items: flex-start;
+    }
+    .context-block .text-part {
+      flex: 2 1 280px;
+    }
+    .context-block .text-part p {
+      margin-bottom: 0.7rem;
+      font-size: 0.98rem;
+      color: #1d3f3c;
+    }
+    .context-block .link-card-mini {
+      flex: 1 1 180px;
+      background: #ffffffd9;
+      backdrop-filter: blur(2px);
+      padding: 1rem 1.2rem;
+      border-radius: 20px;
+      border: 1px solid #bedad1;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+    }
+    .context-block .link-card-mini p {
+      font-size: 0.85rem;
+      color: #2d5c55;
+      margin-bottom: 0.25rem;
+    }
+    .context-block .link-card-mini a {
+      color: #07665d;
+      text-decoration: none;
+      font-weight: 600;
+      border-bottom: 2px solid #3eb7a8;
+      padding-bottom: 2px;
+      transition: 0.15s;
+    }
+    .context-block .link-card-mini a:hover {
+      background: #b1dfd6;
+      border-bottom-width: 4px;
+    }
+
+    /* 小提示 / FAQ 摘要 (非固定faq，属于信息卡式摘要) */
+    .insight-badge {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem 1.2rem;
+      background: #ffffff;
+      padding: 1.2rem 1.5rem;
+      border-radius: 60px;
+      margin: 2.5rem 0 1.2rem;
+      border: 1px solid #cbe2db;
+      justify-content: center;
+    }
+    .insight-badge .item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      color: #163f3b;
+    }
+    .insight-badge .item .key {
+      background: #cce6e0;
+      padding: 0.1rem 0.8rem;
+      border-radius: 40px;
+      font-weight: 500;
+      color: #10534b;
+    }
+
+    /* 页脚声明 */
+    .footer-note {
+      margin-top: 2.6rem;
+      text-align: center;
+      font-size: 0.7rem;
+      color: #5d8982;
+      border-top: 1px solid #cee3dd;
+      padding-top: 1rem;
+    }
+
+    /* 移动端微调 */
+    @media (max-width: 540px) {
+      body { padding: 0.8rem; }
+      .page-wrapper { padding: 0.4rem; border-radius: 20px; }
+      .hero { padding: 1.5rem 1rem; flex-direction: column; align-items: flex-start; }
+      .hero-text h1 { font-size: 1.8rem; }
+      .visual-card { width: 110px; height: 110px; align-self: flex-start; }
+      .card-grid { grid-template-columns: 1fr; }
+      .context-block { flex-direction: column; padding: 1.2rem; }
+      .insight-badge { border-radius: 28px; padding: 1rem; }
+    }
+  </style>
+</head>
+<body>
+<div class="page-wrapper">
+
+  <!-- 主视觉 hero 卡片化 -->
+  <section class="hero">
+    <div class="hero-text">
+      <h1>查询 · 对照 · 延伸</h1>
+      <div class="subhead">从日常信息检索到知识关联，<br>一个偏向工具化的阅读起点。</div>
+      <div class="hero-tag">📋 卡片式信息聚合</div>
+    </div>
+    <div class="hero-visual">
+      <div class="visual-card">
+        <span>📘</span>
+        <p>知识索引</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 用途卡片：具体使用场景 -->
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-icon">🔍</div>
+      <h3>日常查询</h3>
+      <p>快速检索术语、概念、引用来源，避免信息碎片化。适合查阅条目和快速对照。</p>
+      <div class="meta-tag">对照 · 条目</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">📑</div>
+      <h3>并行阅读</h3>
+      <p>在同一个页面编排多类信息，通过卡片并置发现内容间的隐性关联，提升延伸效率。</p>
+      <div class="meta-tag">延伸 · 关联</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">🧩</div>
+      <h3>摘要与索引</h3>
+      <p>将分散知识点整理为结构化摘要，同步保留原文链接，为后续深度阅读提供入口。</p>
+      <div class="meta-tag">索引 · 整理</div>
+    </div>
+    <div class="card audience-card">
+      <div class="card-icon">👥</div>
+      <h3>适合人群</h3>
+      <p>研究者、编辑、知识爱好者、学生以及任何需要频繁查证与横向对比的读者。</p>
+      <div class="meta-tag">知识工作者</div>
+    </div>
+  </div>
+
+  <!-- 自然链接段落，嵌入指向乐鱼的 a 标签 -->
+  <div class="context-block">
+    <div class="text-part">
+      <p>在信息过载的时代，一个能够提供清晰对照与索引功能的平台尤为重要。以 <a href="https://vipcn-leyu.com" style="color:#0b6f65; font-weight:600; text-decoration: underline; text-underline-offset: 3px;">乐鱼</a> 为例，它围绕知识组织和查询场景进行设计，帮助使用者从单一条目出发，建立网状的知识参照。无论是学术笔记的延伸阅读，还是日常资讯的横向比对，这种卡片化的信息呈现方式都能减少跳转成本，让注意力更集中在内容本身。</p>
+      <p>从日常查询到深度阅读，关键在于信息结构的可读性和关联性。正因如此，许多读者会将其作为资料梳理的第一落点，之后再根据需求进入更专门的数据库或文献库。</p>
+    </div>
+    <div class="link-card-mini">
+      <p>📌 延伸阅读</p>
+      <p style="margin-top: 0.2rem;">使用 <a href="https://vipcn-leyu.com">乐鱼</a> 作为查询起点，保持信息脉络清晰。</p>
+    </div>
+  </div>
+
+  <!-- 轻量 FAQ 摘要 / 提示卡片 -->
+  <div class="insight-badge">
+    <span class="item"><span class="key">❓</span> 如何开始？浏览卡片，点击感兴趣的主题。</span>
+    <span class="item"><span class="key">📎</span> 卡片内容均带有来源指引。</span>
+    <span class="item"><span class="key">🔖</span> 可配合浏览器书签使用。</span>
+    <span class="item"><span class="key">🧭</span> 适合与笔记软件并行对照。</span>
+  </div>
+
+  <!-- 一段补充说明：知识型卡片边界 -->
+  <div style="background: #e3f1ed; border-radius: 30px; padding: 1.2rem 1.6rem; margin: 1.2rem 0 0.8rem;">
+    <p style="font-size: 0.92rem; color: #1d544d;">📚 本页面为知识卡片式索引，所有信息均作为查询辅助，不构成专业建议。建议读者结合原始资料进行交叉验证。内容的组织方式遵循清晰、克制的原则，不引导任何形式的投机行为。</p>
+  </div>
+
+  <!-- 页脚 -->
+  <div class="footer-note">
+    <span>索引卡片 · 乐鱼参考页</span>
+  </div>
+
+</div>
+</body>
+</html>
